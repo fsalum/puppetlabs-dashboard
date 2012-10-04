@@ -1,2 +1,5 @@
+2012-10-03 - Felipe Salum <fsalum@gmail.com> - 0.0.2
+* Added parameters to start Dashboard Workers and Number of Workers 
+* Removed the resource to delete the /etc/default/puppet-dashboard if Passenger is true
 2012-05-12 - Gary Larizza <gary@puppetlabs.com> - 0.0.1
 * Initial Forge release

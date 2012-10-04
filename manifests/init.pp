@@ -52,6 +52,12 @@
 #   [*rack_version*]
 #     - The version of the rack gem to install
 #
+#   [*dashboard_workers_start*]
+#     - The value to start the Dashboard Workers. Default to yes.
+#
+#   [*num_delayed_job_workers*]
+#     - The value of dashboard job workers to start. Default to 2.
+#
 # Actions:
 #
 # Requires:
@@ -62,16 +68,18 @@
 #
 # Sample Usage:
 #   class {'dashboard':
-#     dashboard_ensure       => 'present',
-#     dashboard_user         => 'puppet-dbuser',
-#     dashboard_group        => 'puppet-dbgroup',
-#     dashboard_password     => 'changemme',
-#     dashboard_db           => 'dashboard_prod',
-#     dashboard_charset      => 'utf8',
-#     dashboard_site         => $fqdn,
-#     dashboard_port         => '8080',
-#     mysql_root_pw          => 'REALLY_change_me',
-#     passenger              => true,
+#     dashboard_ensure        => 'present',
+#     dashboard_user          => 'puppet-dbuser',
+#     dashboard_group         => 'puppet-dbgroup',
+#     dashboard_password      => 'changemme',
+#     dashboard_db            => 'dashboard_prod',
+#     dashboard_charset       => 'utf8',
+#     dashboard_site          => $fqdn,
+#     dashboard_port          => '8080',
+#     mysql_root_pw           => 'REALLY_change_me',
+#     passenger               => true,
+#     dashboard_workers_start => 'yes',
+#     num_delayed_job_workers => '5',
 #   }
 #
 #  Note: SELinux on Redhat needs to be set separately to allow access to the
@@ -93,7 +101,9 @@ class dashboard (
   $ruby_mysql_package       = $dashboard::params::ruby_mysql_package,
   $dashboard_config         = $dashboard::params::dashboard_config,
   $dashboard_root           = $dashboard::params::dashboard_root,
-  $rack_version             = $dashboard::params::rack_version
+  $rack_version             = $dashboard::params::rack_version,
+  $dashboard_workers_start  = $dashboard::params::dashboard_workers_start,
+  $num_delayed_job_workers  = $dashboard::params::num_delayed_job_workers
 ) inherits dashboard::params {
 
   require mysql
@@ -130,6 +140,24 @@ class dashboard (
       subscribe  => File['/etc/puppet-dashboard/database.yml'],
       require    => Exec['db-migrate']
     }
+  }
+
+  file { 'dashboard_workers':
+    ensure => present,
+    path   => $dashboard_workers,
+    content => template("dashboard/config-dashboard-workers.erb"),
+    owner   => '0',
+    group   => '0',
+    mode    => '0644',
+    require => [ Package[$dashboard_package], User[$dashboard_user] ],
+    notify  => Service[$dashboard_workers_service],
+  }
+
+  service { $dashboard_workers_service:
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    require    => File['dashboard_workers']
   }
 
   package { $dashboard_package:

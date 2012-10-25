@@ -234,7 +234,6 @@ class dashboard (
       gid        => $dashboard_group,
       shell      => '/sbin/nologin',
       managehome => true,
-      home       => "/home/${dashboard_user}",
   }
 
   group { $dashboard_group:

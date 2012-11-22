@@ -1,3 +1,7 @@
+2012-10-25 - Felipe Salum <fsalum@gmail.com> - 0.0.3
+* Removed the home parameter for the user resource. If the user already exists it tries 
+* to change the home and that may cause issues. The managehome parameter already creates 
+* the home dir if it is a new user.
 2012-10-03 - Felipe Salum <fsalum@gmail.com> - 0.0.2
 * Added parameters to start Dashboard Workers and Number of Workers 
 * Removed the resource to delete the /etc/default/puppet-dashboard if Passenger is true

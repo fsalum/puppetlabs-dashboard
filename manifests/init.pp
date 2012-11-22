@@ -150,13 +150,14 @@ class dashboard (
     group   => '0',
     mode    => '0644',
     require => [ Package[$dashboard_package], User[$dashboard_user] ],
-    notify  => Service[$dashboard_workers_service],
   }
 
   service { $dashboard_workers_service:
     ensure     => running,
     enable     => true,
+    hasstatus  => true,
     hasrestart => true,
+    subscribe  => File['/etc/puppet-dashboard/database.yml'],
     require    => File['dashboard_workers']
   }
 
@@ -234,7 +235,6 @@ class dashboard (
       gid        => $dashboard_group,
       shell      => '/sbin/nologin',
       managehome => true,
-      home       => "/home/${dashboard_user}",
   }
 
   group { $dashboard_group:

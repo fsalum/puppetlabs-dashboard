@@ -39,6 +39,11 @@
 #     - Boolean to determine whether Dashboard is to be
 #       used with Passenger
 #
+#   [*dashboard_start*]
+#     - Debian specific. Choose yes/no to launch Dashboard
+#       at boot time. Useful only if configured to use Webrick
+#       instead of Passenger.
+#
 #   [*mysql_package_provider*]
 #     - The package provider to use when installing
 #       the ruby-mysql package

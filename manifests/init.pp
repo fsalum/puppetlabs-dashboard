@@ -26,6 +26,9 @@
 #   [*dashboard_site*]
 #     - The ServerName setting for Apache
 #
+#   [*dashboard_iface*]
+#     - The address on which puppet-dashboard should listen
+#
 #   [*dashboard_port*]
 #     - The port on which puppet-dashboard should run
 #
@@ -35,6 +38,11 @@
 #   [*passenger*]
 #     - Boolean to determine whether Dashboard is to be
 #       used with Passenger
+#
+#   [*dashboard_start*]
+#     - Debian specific. Choose yes/no to launch Dashboard
+#       at boot time. Useful only if configured to use Webrick
+#       instead of Passenger.
 #
 #   [*mysql_package_provider*]
 #     - The package provider to use when installing
@@ -75,9 +83,11 @@
 #     dashboard_db            => 'dashboard_prod',
 #     dashboard_charset       => 'utf8',
 #     dashboard_site          => $fqdn,
+#     dashboard_iface         => '0.0.0.0',
 #     dashboard_port          => '8080',
 #     mysql_root_pw           => 'REALLY_change_me',
 #     passenger               => true,
+#     dashboard_start         => 'yes',
 #     dashboard_workers_start => 'yes',
 #     num_delayed_job_workers => '5',
 #   }
@@ -93,10 +103,12 @@ class dashboard (
   $dashboard_db             = $dashboard::params::dashboard_db,
   $dashboard_charset        = $dashboard::params::dashboard_charset,
   $dashboard_site           = $dashboard::params::dashboard_site,
+  $dashboard_iface          = $dashboard::params::dashboard_iface,
   $dashboard_port           = $dashboard::params::dashboard_port,
   $dashboard_config         = $dashboard::params::dashboard_config,
   $mysql_root_pw            = $dashboard::params::mysql_root_pw,
   $passenger                = $dashboard::params::passenger,
+  $dashboard_start          = $dashboard::params::dashboard_start,
   $mysql_package_provider   = $dashboard::params::mysql_package_provider,
   $ruby_mysql_package       = $dashboard::params::ruby_mysql_package,
   $dashboard_config         = $dashboard::params::dashboard_config,
@@ -118,6 +130,7 @@ class dashboard (
   if $passenger {
     class { 'dashboard::passenger':
       dashboard_site   => $dashboard_site,
+      dashboard_iface  => $dashboard_iface,
       dashboard_port   => $dashboard_port,
       dashboard_config => $dashboard_config,
       dashboard_root   => $dashboard_root,

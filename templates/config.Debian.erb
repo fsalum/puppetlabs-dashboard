@@ -3,7 +3,7 @@
 # created and migrated the database.
 
 # Uncomment the line below to start Puppet Dashboard.
-START=yes
+START=<%= dashboard_start %>
 
 # Location where puppet-dashboard is installed:
 DASHBOARD_HOME=<%= dashboard_root %>
@@ -18,7 +18,8 @@ DASHBOARD_RUBY=/usr/bin/ruby
 DASHBOARD_ENVIRONMENT=<%= dashboard_environment %>
 
 # Network interface which puppet-dashboard web server is running at:
-DASHBOARD_IFACE=0.0.0.0
+DASHBOARD_IFACE=<%= dashboard_iface %>
 
 # Port on which puppet-dashboard web server is running at, note that if the
 # puppet-dashboard user is not root, it has to be a > 1024:
+DASHBOARD_PORT=<%= dashboard_port %>

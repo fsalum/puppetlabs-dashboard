@@ -20,8 +20,10 @@ class dashboard::params {
   $dashboard_charset       = 'utf8'
   $dashboard_environment   = 'production'
   $dashboard_site          = $::fqdn
+  $dashboard_iface         = '0.0.0.0'
   $dashboard_port          = '8080'
   $passenger               = false
+  $dashboard_start         = true
   $mysql_root_pw           = 'changemetoo'
   $rails_base_uri          = '/'
   $rack_version            = '1.1.2'

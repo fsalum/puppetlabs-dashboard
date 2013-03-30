@@ -8,6 +8,7 @@ node default {
     dashboard_db              => 'dashboard_prod',
     dashboard_charset         => 'utf8',
     dashboard_site            => $::fqdn,
+    dashboard_iface           => '127.0.0.1',
     dashboard_port            => '8081',
     mysql_root_pw             => 'changemetoo',
     passenger                 => true,

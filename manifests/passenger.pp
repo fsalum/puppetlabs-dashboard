@@ -6,6 +6,9 @@
 #   [*dashboard_site*]
 #     - The ServerName setting for Apache
 #
+#   [*dashboard_iface*]
+#     - The address on which puppet-dashboard should listen
+#
 #   [*dashboard_port*]
 #     - The port on which puppet-dashboard should run
 #
@@ -23,6 +26,7 @@
 #
 class dashboard::passenger (
   $dashboard_site,
+  $dashboard_iface,
   $dashboard_port,
   $dashboard_config,
   $dashboard_root
@@ -32,9 +36,13 @@ class dashboard::passenger (
   include apache
 
   apache::vhost { $dashboard_site:
-    port     => $dashboard_port,
-    priority => '50',
-    docroot  => "${dashboard_root}/public",
-    template => 'dashboard/passenger-vhost.erb',
+    vhost_name => $dashboard_iface ? {
+      '0.0.0.0' => '*',
+      default   => $dashboard_iface,
+    },
+    port       => $dashboard_port,
+    priority   => '50',
+    docroot    => "${dashboard_root}/public",
+    template   => 'dashboard/passenger-vhost.erb',
   }
 }

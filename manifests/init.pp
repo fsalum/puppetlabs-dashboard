@@ -26,6 +26,9 @@
 #   [*dashboard_site*]
 #     - The ServerName setting for Apache
 #
+#   [*dashboard_iface*]
+#     - The address on which puppet-dashboard should listen
+#
 #   [*dashboard_port*]
 #     - The port on which puppet-dashboard should run
 #
@@ -75,6 +78,7 @@
 #     dashboard_db            => 'dashboard_prod',
 #     dashboard_charset       => 'utf8',
 #     dashboard_site          => $fqdn,
+#     dashboard_iface         => '0.0.0.0',
 #     dashboard_port          => '8080',
 #     mysql_root_pw           => 'REALLY_change_me',
 #     passenger               => true,
@@ -93,6 +97,7 @@ class dashboard (
   $dashboard_db             = $dashboard::params::dashboard_db,
   $dashboard_charset        = $dashboard::params::dashboard_charset,
   $dashboard_site           = $dashboard::params::dashboard_site,
+  $dashboard_iface          = $dashboard::params::dashboard_iface,
   $dashboard_port           = $dashboard::params::dashboard_port,
   $dashboard_config         = $dashboard::params::dashboard_config,
   $mysql_root_pw            = $dashboard::params::mysql_root_pw,
@@ -118,6 +123,7 @@ class dashboard (
   if $passenger {
     class { 'dashboard::passenger':
       dashboard_site   => $dashboard_site,
+      dashboard_iface  => $dashboard_iface,
       dashboard_port   => $dashboard_port,
       dashboard_config => $dashboard_config,
       dashboard_root   => $dashboard_root,

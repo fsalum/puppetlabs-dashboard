@@ -39,6 +39,11 @@
 #     - Boolean to determine whether Dashboard is to be
 #       used with Passenger
 #
+#   [*dashboard_start*]
+#     - Debian specific. Choose yes/no to launch Dashboard
+#       at boot time. Useful only if configured to use Webrick
+#       instead of Passenger.
+#
 #   [*mysql_package_provider*]
 #     - The package provider to use when installing
 #       the ruby-mysql package
@@ -82,6 +87,7 @@
 #     dashboard_port          => '8080',
 #     mysql_root_pw           => 'REALLY_change_me',
 #     passenger               => true,
+#     dashboard_start         => 'yes',
 #     dashboard_workers_start => 'yes',
 #     num_delayed_job_workers => '5',
 #   }
@@ -102,6 +108,7 @@ class dashboard (
   $dashboard_config         = $dashboard::params::dashboard_config,
   $mysql_root_pw            = $dashboard::params::mysql_root_pw,
   $passenger                = $dashboard::params::passenger,
+  $dashboard_start          = $dashboard::params::dashboard_start,
   $mysql_package_provider   = $dashboard::params::mysql_package_provider,
   $ruby_mysql_package       = $dashboard::params::ruby_mysql_package,
   $dashboard_config         = $dashboard::params::dashboard_config,

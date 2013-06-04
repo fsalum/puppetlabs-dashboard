@@ -1,5 +1,5 @@
 name 'fsalum-dashboard'
-version '0.0.3'
+version '0.0.4'
 source 'git://github.com/fsalum/puppetlabs-dashboard.git'
 author 'puppetlabs'
 license 'Apache 2.0'

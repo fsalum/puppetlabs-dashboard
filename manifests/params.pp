@@ -13,6 +13,8 @@
 class dashboard::params {
 
   $dashboard_ensure        = 'present'
+  $dashboard_dbhost        = 'localhost'
+  $dashboard_dbport        = '3306'
   $dashboard_user          = 'puppet-dashboard'
   $dashboard_group         = 'puppet-dashboard'
   $dashboard_password      = 'changeme'

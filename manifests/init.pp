@@ -7,6 +7,13 @@
 #     - The value of the ensure parameter for the
 #       puppet-dashboard package
 #
+#   [*dashboard_dbhost*]
+#     - Hostname for Dashboard MySQL server
+#       You may want to have your MySQL in another instance
+#
+#   [*dashboard_dbport*]
+#     - Port for MySQL Server
+#
 #   [*dashboard_user*]
 #     - Name of the puppet-dashboard database and
 #       system user
@@ -87,6 +94,8 @@
 #
 class dashboard (
   $dashboard_ensure         = $dashboard::params::dashboard_ensure,
+  $dashboard_dbhost         = $dashboard::params::dashboard_dbhost,
+  $dashboard_dbport         = $dashboard::params::dashboard_dbport,
   $dashboard_user           = $dashboard::params::dashboard_user,
   $dashboard_group          = $dashboard::params::dashboard_group,
   $dashboard_password       = $dashboard::params::dashboard_password,

@@ -11,6 +11,8 @@ To install the Puppet Dashboard and configure it with sane defaults, include the
     node default {
 			   class {'dashboard':
 			     dashboard_ensure          => 'present',
+			     dashboard_dbhost          => 'localhost',
+			     dashboard_dbport          => '3306',
 			     dashboard_user            => 'puppet-dbuser',
 			     dashboard_group           => 'puppet-dbgroup',
 			     dashboard_password        => 'changeme',
